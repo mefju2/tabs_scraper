@@ -56,7 +56,7 @@ def extractImagesVertical(pathIn, pathOut, increment_by):
 
     while success:
         vidcap.set(cv2.CAP_PROP_POS_MSEC,(count*950))
-        success,image = vidcap.read()
+        success, image = vidcap.read()
         # print('Read a new frame: ', success)
 
         if image is not None:
@@ -95,7 +95,8 @@ def extractImagesVertical(pathIn, pathOut, increment_by):
                     page_width += 1280
 
             count = count + increment_by
-    cv2.imwrite(f"{pathOut}/a4_full_{count}.jpg", current_page[page_part_counter])
+    if current_page[0] is not None:
+        cv2.imwrite(f"{pathOut}/a4_full_{count}.jpg", current_page[page_part_counter])
 
 
 def get_measure_number(image, previous_measure_number, pathOut):
@@ -118,7 +119,7 @@ def get_measure_number(image, previous_measure_number, pathOut):
 
 
 def run():
-    out_path = "/Users/mateuszmichno/PycharmProjects/pythonProject/tabs_scraper/frames"
+    out_path = "frames"
     # extractImagesHorizontal(in_path, out_path)
     # extractImagesVertical("The Entertainer.mp4", out_path, 14)  # The Entertainer
     extractImagesVertical("Married_Life.mp4", out_path, 7)  # Married Life
