@@ -1,16 +1,15 @@
-from dataclasses import dataclass
-
 import numpy as np
-from numpy import ndarray
+from settings import Settings
 
 
 class Page:
-    def __init__(self, index: int, page_height: int):
+    def __init__(self, index: int, settings: Settings):
         self.index = index
-        self.content = self.get_blank_page(page_height)
+        self.content = self.get_blank_page(settings)
         self.saved_on_disk = False
 
-    def get_blank_page(self, page_height):
-        shape = (page_height, 2560, 3)
+    def get_blank_page(self, settings):
+        crop_height = settings.crop_height_cords[1] - settings.crop_height_cords[0]
+        shape = (crop_height * settings.amount_of_rows, settings.video_width * 2, 3)
         return np.full(shape, 255)
 
