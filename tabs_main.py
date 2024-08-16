@@ -16,7 +16,7 @@ def run():
     sky_guitar_settings_fhd_tabs_down = Settings((600, 1080), (658, 688), (88, 122), 5, 1920, 1080)
     smile_guitar_settings = Settings((645, 1080), (650, 685), (0, 25), 6, 1920, 1080)
     sky_guitar_settings_small = Settings((0, 168), (24, 40), (26, 42), 5, 640, 360)
-    kenneth_guitar_settings = Settings((800, 1080), (585, 635), (180, 230), 5, 1600, 1080)
+    kenneth_guitar_settings = Settings((800, 1080), (585, 635), (180, 230), 6, 1600, 1080)
     piano_settings = Settings((0, 255), (0, 25), (110, 150), 5, 1280, 720)
     # extractImagesVertical("The Entertainer.mp4", out_path, 14)
     # extract_images_vertical("Married_Life.mp4", out_path, 10, sky_guitar_settings, (230,))
@@ -36,8 +36,10 @@ def run():
     # split_video_into_separate_measures("videos/Reflections.mp4", sky_guitar_settings_fhd_tabs_up, 12, True)
     # split_video_into_separate_measures("videos/La_Lagrima.mp4", sky_guitar_settings_fhd_tabs_down, 10, True)
     # split_video_into_separate_measures("Libertango - A. Piazzolla.mp4", smile_guitar_settings, 12, False)
-    # MeasuresService.split_video_into_separate_measures("videos/Always_with_me.mp4", kenneth_guitar_settings, 4, False, False)
-    TrimService.trim_all_measures(kenneth_guitar_settings)
+    MeasuresService.split_video_into_separate_measures("videos/Always_with_me.mp4", kenneth_guitar_settings, 4, False, False)
+    trimmed_measures_list = TrimService.trim_all_measures(kenneth_guitar_settings)
+    organized_list = PagesService.organize_trimmed_measures(kenneth_guitar_settings, trimmed_measures_list)
+    PagesService.combine_trimmed_measures_into_pages(kenneth_guitar_settings, organized_list)
     # PagesService.combine_measures_into_pages(kenneth_guitar_settings, 'trimmed')
 
 

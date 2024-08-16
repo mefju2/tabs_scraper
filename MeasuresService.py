@@ -1,7 +1,7 @@
 import cv2
-import pytesseract
 
 from settings import Settings
+import Helpers
 
 
 def get_measures_section(frame, settings: Settings, test_measurement_section: bool):
@@ -34,8 +34,8 @@ def measures_are_equal(current_measure, previous_measure, path_out, count):
     #             different += 1
     #
     #     if different > 200:
-    c_ocr = read_measure_with_ocr(current_measure)
-    p_ocr = read_measure_with_ocr(previous_measure)
+    c_ocr = Helpers.read_measure_with_ocr(current_measure)
+    p_ocr = Helpers.read_measure_with_ocr(previous_measure)
     # if 80 > count > 20:
     # cv2.imwrite(f"debug/{count}_{different}_{c_ocr}_current_measure.jpg", current_measure)
     # cv2.imwrite(f"debug/{count}_{different}_{p_ocr}_previous_measure.jpg", previous_measure)
@@ -45,18 +45,6 @@ def measures_are_equal(current_measure, previous_measure, path_out, count):
     print(count, c_ocr, p_ocr)
     return False
     # return True
-
-
-def read_measure_with_ocr(measure):
-    read_number = pytesseract.image_to_string(measure, config='--psm 6').strip()
-
-    # handling weird ocr reads
-    if read_number == 'oL':
-        return '51'
-    if '.' in read_number:
-        read_number = read_number.replace('.', '')
-
-    return read_number.lower()
 
 
 def split_video_into_separate_measures(
